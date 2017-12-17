@@ -7,9 +7,13 @@ app.use(function(req, res, next) {
   next();
 });
 
-var users = ["Joe","Luke","Rewaz","Stefan"];
+var server = require('http').createServer(app);
+var io = require('socket.io').listen(server);
 
-var data = 
+var users = ["Joe","Luke","Rewaz","Stefan"];
+connections = [];
+
+var chats = [""] 
 
 
 app.locals.users = users;
@@ -34,6 +38,18 @@ app.get('/', function (req, res) {
 app.get('/data-api', function (req, res) {
 		res.json(users);
   });
+
+
+io.sockets.on('connection',function(socket)
+{
+	connections.push(socket);
+	console.log('Connected: %s sockets connected', connections.length);
+
+
+	connections.splice(connections.indexOf(socket),1);
+	console.log('Disconnected: %s sockets connected', connections.length);
+});
+
 
 
 var server = app.listen(8000, function () {
