@@ -13,7 +13,7 @@ var io = require('socket.io').listen(server);
 var users = ["Joe","Luke","Rewaz","Stefan"];
 connections = [];
 
-var chats = [""] 
+var chats = [""]; 
 
 
 app.locals.users = users;
@@ -45,9 +45,12 @@ io.sockets.on('connection',function(socket)
 	connections.push(socket);
 	console.log('Connected: %s sockets connected', connections.length);
 
+	socket.on('disconnected', function(data)
+	{
+		connections.splice(connections.indexOf(socket),1);
+		console.log('Disconnected: %s sockets connected', connections.length);
+	});
 
-	connections.splice(connections.indexOf(socket),1);
-	console.log('Disconnected: %s sockets connected', connections.length);
 });
 
 
@@ -58,5 +61,14 @@ var server = app.listen(8000, function () {
   var port = server.address().port;
 
   console.log('Example app listening at http://%s:%s', host, port);
+
+
+
+  app.use('/', express.static(__dirname + '/www')); // redirect root
+  app.use('/js', express.static(__dirname + '/node_modules/bootstrap/dist/js')); // redirect bootstrap JS
+  app.use('/js', express.static(__dirname + '/node_modules/jquery/dist')); // redirect JS jQuery
+  app.use('/css', express.static(__dirname + '/node_modules/bootstrap/dist/css')); // redirect CSS bootstrap
+  app.use('/css', express.static(__dirname + '/node_modules/bootstrap/dist/css')); // redirect CSS bootstrap
+  app.use('/html', express.static(__dirname + '/node_modules/socket.io/lib/js')); // redirect CSS bootstrap
 
 });
