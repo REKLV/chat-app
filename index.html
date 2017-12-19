@@ -11,6 +11,10 @@
 		{
 			margin-top: 30px; 
 		}
+		ul
+		{
+			list-style-type: none;
+		}
 	</style>
 
 </head>
@@ -20,7 +24,10 @@
 			<div class= "col-md-4">
 				<div class="well">
 					<h3> chats </h3>
-					<ul class = "list-grouop" id="chats"></ul>
+					<ul class = "list-grouop" id="chats"></ul> 
+
+
+
 				</div>
 			</div>
 			<div class= "col-md-8">
@@ -41,6 +48,7 @@
 
 		const url = 'http://localhost:8888/chats';
 		const ul = document.getElementById('chats');
+		const ul_chat_details= document.getElementById('chat_details');
 
 		fetch(url, { credentials: 'include' })
 		  .then(response => response.json())
@@ -66,11 +74,41 @@
 		      let chats = data.chats;
 		   	  return data.chats.map(function(chat) 
 		   	  { // Map through the results and for each run the code below
-			      let li = createNode('li'), //  Create the elements we need
-			      span = createNode('span');
-			      span.innerHTML = `${chat.buddy}`; // Make the HTML of our span to be the first person in the chat
-			      append(li, span);
-			      append(ul, li);
+			      let li_the_chat = createNode('li'); //  Create the elements we need
+			      let li_last_message = createNode('li'); //  Create the elements we need
+			      let li_time = createNode('li'); //  Create the elements we need
+			      let br_chat = createNode('br'); //  Create the elements we need
+
+
+			      span_chat = createNode('span');
+			      span_chat.innerHTML = `${chat.buddy}`; // Make the HTML of our span to be the first person in the chat
+
+			      span_last_message = createNode('span');
+			      span_last_message.innerHTML = `${chat.lastMessage}`; // Make the HTML of our span to be the first person in the chat
+
+			      span_time = createNode('span');
+			      span_time.innerHTML = `${chat.timestamp}`; // Make the HTML of our span to be the first person in the chat
+
+
+			      append(li_the_chat, span_chat);
+
+			      append(ul, li_the_chat);
+
+			      append(li_last_message, span_last_message);
+
+			      append(ul, li_last_message);
+
+			      append(li_time, span_time);
+
+			      append(ul, li_time );
+
+			      append(ul, br_chat );
+
+			      
+			     
+
+			      
+
 			  });
 		});
 
