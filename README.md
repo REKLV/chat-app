@@ -1,3 +1,3 @@
 # chat-app
 
-run nodemon index 
+run `npm start`
