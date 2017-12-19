@@ -1,22 +1,13 @@
 var express = require('express');
 var cors = require("cors");
 var app = express();
+
 app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
   next();
 });
 
-var server = require('http').createServer(app);
-var io = require('socket.io').listen(server);
-
-var users = ["Joe","Luke","Rewaz","Stefan"];
-connections = [];
-
-var chats = [""]; 
-
-
-app.locals.users = users;
 
 /*app.use(function(req,res,next)
 {
@@ -34,12 +25,11 @@ app.get('/', function (req, res) {
   });
 
 
-
 app.get('/data-api', function (req, res) {
 		res.json(users);
   });
 
-
+/*
 io.sockets.on('connection',function(socket)
 {
 	connections.push(socket);
@@ -52,10 +42,10 @@ io.sockets.on('connection',function(socket)
 	});
 
 });
+*/
 
 
-
-var server = app.listen(8000, function () {
+var server = app.listen(3000, function () {
 
   var host = server.address().address;
   var port = server.address().port;

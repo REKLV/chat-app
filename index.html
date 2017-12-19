@@ -20,7 +20,7 @@
 			<div class= "col-md-4">
 				<div class="well">
 					<h3> chats </h3>
-					<ul class = "list-grouop" id="users"></ul>
+					<ul class = "list-grouop" id="chats"></ul>
 				</div>
 			</div>
 			<div class= "col-md-8">
@@ -38,8 +38,44 @@
 	</div>
 
 	<script>
-			console.log('app.locals.port: ' + app.locals.users);
+
+		const url = 'http://localhost:8888/chats';
+		const ul = document.getElementById('chats');
+
+		fetch(url, { credentials: 'include' })
+		  .then(response => response.json())
+		  .then(json => { console.log(json) })
+
+		// Create the type of element you pass in the parameters
+	    function createNode(element) 
+	    {
+			return document.createElement(element); 
+		}
+
+		// Append the second parameter(element) to the first one
+		function append(parent, el) 
+		{
+			return parent.appendChild(el); 
+		}
+
+		fetch(url, { credentials: 'include' })
+		.then((resp) => resp.json()) 
+		.then(function(data) 
+		{
+		      // Create and append the li's to the ul
+		      let chats = data.chats;
+		   	  return data.chats.map(function(chat) 
+		   	  { // Map through the results and for each run the code below
+			      let li = createNode('li'), //  Create the elements we need
+			      span = createNode('span');
+			      span.innerHTML = `${chat.buddy}`; // Make the HTML of our span to be the first person in the chat
+			      append(li, span);
+			      append(ul, li);
+			  });
+		});
+
 	</script>
 
 </body>
 </html>
+
